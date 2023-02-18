@@ -49,7 +49,6 @@ guessButton.addEventListener("click", function(e) {
     guessInput.value = "";
 });
 
-// TROUBLESHOOT THIS SECTION //
 
 // Check the player's input - parameter is selecting the input
 const inputVal = function (input) {
@@ -70,11 +69,50 @@ return input;
 
 // Capturing input
 const makeGuess = function (letter) {
-letter.toUpperCase();
+letter = letter.toUpperCase(); // makes input display as uppercase
 if (guessedLetters.includes(letter)) {
     messages.innerText = "You already guessed that letter. Please try again!"; //NOTE: this message is displaying for non-guessed letters
 } else {
     guessedLetters.push(letter);
+    guessDisplay(letter);
+    console.log(guessedLetters);
+    updateWordInProgress(guessedLetters);
 }
-console.log(guessedLetters);
 };
+
+// Show guessed letters
+const guessDisplay = function () {
+guessedLettersPar.innerHTML = "";
+guessedLetters.forEach(function (letter) {
+let li = document.createElement("li");
+li.innerHTML = letter;
+guessedLettersPar.append(li);
+}
+)
+};
+
+//Update Word in progress
+const updateWordInProgress = function (guessedLetters) {
+ const wordUpper = word.toUpperCase();
+ const wordArray = wordUpper.split("");
+ const revealWord = [];
+ // Matching guessed letters to answer and revealing answer
+ for (const letter of wordArray) {
+    if (guessedLetters.includes(letter)) {
+    revealWord.push(letter.toUpperCase());
+    } else {
+    revealWord.push("●");
+    }
+ } 
+// console.log(wordArray); 
+wordInProgress.innerText = revealWord.join("");
+winner();
+};
+
+// Check if player has won
+const winner = function () {
+    if (word.toUpperCase() === wordInProgress.innerText) {
+        messages.classList.add("win");
+        messages.innerHTML = `<p class="highlight"> You guessed the correct word! Congrats! </p>`;
+}
+}
