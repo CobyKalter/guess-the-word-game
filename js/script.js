@@ -176,7 +176,7 @@ playAgain.addEventListener("click", function() {
     messages.classList.remove("win"); 
     messages.innerText = "";
     guessedLettersPar.innerHTML = "";
-    remainingGuesses = remainingGuesses;
+    remainingGuesses = 8;
     guessedLetters = [];
     remainingSpan.innerText = `${remainingGuesses} guesses`;
     guessButton.classList.remove("hide");
